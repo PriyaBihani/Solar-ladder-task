@@ -38,7 +38,7 @@ const rows = [
 
 export const Inventory = () => {
 	return (
-		<Box m={5}>
+		<Box m={3}>
 			<TableContainer component={Paper}>
 				<Table>
 					<TableHead>

@@ -1,8 +1,9 @@
-import { Inventory } from './components';
+import { Inventory, Actions } from './components';
 
 const App = () => {
 	return (
 		<div className='App'>
+			<Actions />
 			<Inventory />
 		</div>
 	);

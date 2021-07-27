@@ -1,9 +1,9 @@
-import { Table } from './components';
+import { Inventory } from './components';
 
 const App = () => {
 	return (
 		<div className='App'>
-			<Table />
+			<Inventory />
 		</div>
 	);
 };

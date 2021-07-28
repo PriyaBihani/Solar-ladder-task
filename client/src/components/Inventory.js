@@ -18,6 +18,7 @@ import AdjustStock from './AdjustStock';
 
 export const Inventory = ({ selected, setSelected, data }) => {
 	const [adjustStockModalState, setAdjustStockModalState] = useState(false);
+	const [adjustStockModalData, setAdjustStockModalData] = useState(null);
 
 	const handleCheckboxClick = (event, id) => {
 		event.stopPropagation();
@@ -88,32 +89,35 @@ export const Inventory = ({ selected, setSelected, data }) => {
 										checked={isSelected(item.id)}
 									/>
 								</TableCell>
-								<TableCell component='th' scope='row'>
+								<TableCell component='th' scope='row' align='center'>
 									{item.itemName}
 								</TableCell>
-								<TableCell>{item.itemCode}</TableCell>
-								<TableCell>{item.category}</TableCell>
-								<TableCell>{item.stockQuantity}</TableCell>
-								<TableCell>{item.stockOnHold}</TableCell>
-								<TableCell>&#8377; {item.stockValue}</TableCell>
-								<TableCell>&#8377; {item.price}</TableCell>
-								<TableCell>
+								<TableCell align='center'>{item.itemCode}</TableCell>
+								<TableCell align='center'>{item.category}</TableCell>
+								<TableCell align='center'>{item.stockQuantity}</TableCell>
+								<TableCell align='center'>{item.stockOnHold}</TableCell>
+								<TableCell align='center'>
+									&#8377; {item.stockQuantity * item.price}
+								</TableCell>
+								<TableCell align='center'>&#8377; {item.price}</TableCell>
+								<TableCell align='center'>
 									{item.stockQuantity <= item.lowStockUnits && (
 										<Warning color='secondary' />
 									)}
 								</TableCell>
-								<TableCell>
+								<TableCell align='center'>
 									{' '}
 									<IconButton>
 										<Edit color='disabled' />{' '}
 									</IconButton>
 								</TableCell>
-								<TableCell>
+								<TableCell align='center'>
 									<Button
 										variant='outlined'
 										color='primary'
 										onClick={() => {
 											setAdjustStockModalState((prevState) => !prevState);
+											setAdjustStockModalData(item);
 										}}>
 										Adjust Stock
 									</Button>
@@ -126,6 +130,8 @@ export const Inventory = ({ selected, setSelected, data }) => {
 			<AdjustStock
 				adjustStockModalState={adjustStockModalState}
 				setAdjustStockModalState={setAdjustStockModalState}
+				data={adjustStockModalData}
+				setAdjustStockModalData={setAdjustStockModalData}
 			/>
 		</Box>
 	);

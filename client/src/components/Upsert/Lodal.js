@@ -45,12 +45,9 @@ const Lodal = ({ addModalState, setaddModalState }) => {
             >
                 <Fade in={addModalState}>
                     <div className={classes.paper}>
-                        <h2 id="transition-modal-title">Create Modal</h2>
+                        <h3 id="transition-modal-title">Create Item</h3>
                         <AddForm />
-
                     </div>
-
-
                 </Fade>
             </Modal>
         </div>

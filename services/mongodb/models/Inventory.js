@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const InventorySchema = mongoose.Schema(
 	{
-		itemnName: {
+		itemName: {
 			type: String,
 			unique: true,
 			required: true,
@@ -23,7 +23,14 @@ const InventorySchema = mongoose.Schema(
 			type: Number,
 			default: 0,
 		},
-
+		description: {
+			type: String,
+			required: true,
+		},
+		unit: {
+			type: String,
+			required: true,
+		},
 		stockValue: {
 			type: Number,
 			default: 0,

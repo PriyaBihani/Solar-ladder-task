@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
 	Box,
 	Table,
@@ -9,9 +10,11 @@ import {
 	TableBody,
 	Button,
 	IconButton,
+	Checkbox,
 } from '@material-ui/core';
 
 import { Edit, Warning } from '@material-ui/icons';
+import AdjustStock from './AdjustStock';
 
 const rows = [
 	{
@@ -23,6 +26,7 @@ const rows = [
 		stockOnHold: 0,
 		stockValue: 43,
 		price: 342,
+		lowStockUnits: 1,
 	},
 	{
 		id: 2,
@@ -33,16 +37,21 @@ const rows = [
 		stockOnHold: 0,
 		stockValue: 43,
 		price: 342,
+		lowStockUnits: 1,
 	},
 ];
 
 export const Inventory = () => {
+	const [adjustStockModalState, setAdjustStockModalState] = useState(false);
 	return (
 		<Box m={3}>
 			<TableContainer component={Paper}>
 				<Table>
 					<TableHead>
 						<TableRow>
+							<TableCell padding='checkbox'>
+								<Checkbox color='primary' />{' '}
+							</TableCell>
 							<TableCell>Item Name</TableCell>
 							<TableCell>Item Code</TableCell>
 							<TableCell>Category</TableCell>
@@ -58,6 +67,9 @@ export const Inventory = () => {
 					<TableBody>
 						{rows.map((row) => (
 							<TableRow key={row.id}>
+								<TableCell className='selectCheckbox' padding='checkbox'>
+									<Checkbox color='primary' />
+								</TableCell>
 								<TableCell component='th' scope='row'>
 									{row.itemName}
 								</TableCell>
@@ -68,10 +80,11 @@ export const Inventory = () => {
 								<TableCell>&#8377; {row.stockValue}</TableCell>
 								<TableCell>&#8377; {row.price}</TableCell>
 								<TableCell>
-									{' '}
-									<IconButton>
-										<Warning color='secondary' />{' '}
-									</IconButton>
+									{row.stockQuantity <= row.lowStockUnits && (
+										<IconButton>
+											<Warning color='secondary' />{' '}
+										</IconButton>
+									)}
 								</TableCell>
 								<TableCell>
 									{' '}
@@ -80,8 +93,13 @@ export const Inventory = () => {
 									</IconButton>
 								</TableCell>
 								<TableCell>
-									<Button variant='outlined' color='primary'>
-										Secondary
+									<Button
+										variant='outlined'
+										color='primary'
+										onClick={() => {
+											setAdjustStockModalState((prevState) => !prevState);
+										}}>
+										Adjust Stock
 									</Button>
 								</TableCell>
 							</TableRow>
@@ -89,6 +107,10 @@ export const Inventory = () => {
 					</TableBody>
 				</Table>
 			</TableContainer>
+			<AdjustStock
+				adjustStockModalState={adjustStockModalState}
+				setAdjustStockModalState={setAdjustStockModalState}
+			/>
 		</Box>
 	);
 };

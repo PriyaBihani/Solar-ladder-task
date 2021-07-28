@@ -97,7 +97,7 @@ export default function FullWidthGrid() {
             </FormControl>
 
             <FormControl margin="normal" fullWidth="true">
-              <TextField size="small" id="item-name" label="Outlined" variant="outlined" />
+              <TextField size="small" id="item-name" label="Item Name" variant="outlined" />
             </FormControl>
 
             <FormControl margin="normal" size="small" variant="outlined" className={classes.formControl}>

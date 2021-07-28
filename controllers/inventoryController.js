@@ -87,9 +87,9 @@ exports.updateInventory = async (req) => {
 
 exports.deleteInventory = async (req) => {
 	try {
-		const inventory = await Inventory.findById(req.params.articleId);
-
-		await inventory.remove();
+		const inventory = await Inventory.deleteMany({
+			id: { $in: req.body.id.map(mongoose.Types.ObjectId) },
+		});
 
 		return {
 			message: 'Deleted article successfully',

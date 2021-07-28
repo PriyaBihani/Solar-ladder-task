@@ -1,11 +1,25 @@
 import { useState } from 'react';
 import { Box, Button } from '@material-ui/core';
 import { Delete, Add, Close } from '@material-ui/icons';
+import axios from 'axios';
 import Lodal from './Upsert/Lodal';
 
 export const Actions = ({ showLowStock, setShowLowStock, selected }) => {
 	const [addModalState, setaddModalState] = useState(false);
-
+	const handledelete = async () => {
+		const removed = await axios.post(
+			'api/inventory/delete',
+			{
+				id: selected,
+			},
+			{
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		);
+		console.log(removed);
+	};
 	return (
 		<Box
 			component='div'
@@ -24,7 +38,8 @@ export const Actions = ({ showLowStock, setShowLowStock, selected }) => {
 			<Button
 				variant='outlined'
 				disabled={selected.length > 0 ? false : true}
-				color={selected.length > 0 ? 'secondary' : 'primary'}>
+				color={selected.length > 0 ? 'secondary' : 'primary'}
+				onClick={handledelete}>
 				<Delete />
 				{'  '} Delete Selected
 			</Button>

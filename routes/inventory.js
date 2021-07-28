@@ -40,7 +40,7 @@ router.post(
 	}
 );
 
-router.post('/update/:id', async (req, res) => {
+router.post('/inventory/update/:id', async (req, res) => {
 	try {
 		let inventory = await inventoryController.updateInventory(req);
 		let code = inventory.statusCode;
@@ -56,7 +56,7 @@ router.post('/update/:id', async (req, res) => {
 	}
 });
 
-router.post('/delete/:id', async (req, res) => {
+router.post('/inventory/delete', async (req, res) => {
 	try {
 		let inventory = await inventoryController.deleteInventory(req);
 		let code = inventory.statusCode;

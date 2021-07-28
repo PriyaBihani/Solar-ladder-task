@@ -1,5 +1,5 @@
-let Inventory = require('../services/mongodb/models/Inventory'),
-	
+let Inventory = require('../services/mongodb/models/Inventory');
+
 const { validationResult } = require('express-validator');
 
 exports.getInventories = async (req) => {
@@ -24,7 +24,6 @@ exports.getInventories = async (req) => {
 	}
 };
 
-
 exports.addInventory = async (req) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
@@ -40,7 +39,7 @@ exports.addInventory = async (req) => {
 	try {
 		const inventory = new Inventory(req.body);
 		const inventorySaved = await inventory.save();
-		
+
 		return {
 			message: 'Inventory added successfully',
 			data: { inventory },
@@ -89,7 +88,7 @@ exports.updateInventory = async (req) => {
 exports.deleteInventory = async (req) => {
 	try {
 		const inventory = await Inventory.findById(req.params.articleId);
-		
+
 		await inventory.remove();
 
 		return {
@@ -110,4 +109,3 @@ exports.deleteInventory = async (req) => {
 		};
 	}
 };
-

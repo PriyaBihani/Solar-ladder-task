@@ -41,9 +41,8 @@ const rows = [
 	},
 ];
 
-export const Inventory = () => {
+export const Inventory = ({ selected, setSelected }) => {
 	const [adjustStockModalState, setAdjustStockModalState] = useState(false);
-	const [selected, setSelected] = useState([]);
 
 	const handleCheckboxClick = (event, id) => {
 		event.stopPropagation();
@@ -68,12 +67,12 @@ export const Inventory = () => {
 
 	const handleSelectAllClick = (event) => {
 		if (event.target.checked) {
-			setSelected((prevState) => prevState.data.map((n) => n.id));
+			setSelected(rows.map((n) => n.id));
 			return;
 		}
 		setSelected([]);
 	};
-
+	console.log(selected);
 	const isSelected = (id) => selected.indexOf(id) !== -1;
 
 	return (
@@ -88,8 +87,8 @@ export const Inventory = () => {
 									indeterminate={
 										selected.length > 0 && selected.length < rows.length
 									}
-									checked={selected.length === rows.length}
 									onChange={handleSelectAllClick}
+									checked={selected.length === rows.length}
 								/>{' '}
 							</TableCell>
 							<TableCell>Item Name</TableCell>
@@ -111,7 +110,7 @@ export const Inventory = () => {
 									<Checkbox
 										color='primary'
 										onClick={(event) => handleCheckboxClick(event, row.id)}
-										checked={isSelected}
+										checked={isSelected(row.id)}
 									/>
 								</TableCell>
 								<TableCell component='th' scope='row'>

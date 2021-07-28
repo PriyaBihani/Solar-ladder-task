@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Box, Button } from '@material-ui/core';
-import { Delete, Add } from '@material-ui/icons';
+import { Delete, Add, Close } from '@material-ui/icons';
 import Lodal from './Upsert/Lodal';
 
-export const Actions = () => {
+export const Actions = ({ showLowStock, setShowLowStock }) => {
 	const [addModalState, setaddModalState] = useState(false);
 
 	return (
@@ -15,7 +15,12 @@ export const Actions = () => {
 				justifyContent: 'space-evenly',
 				alignItems: 'center',
 			}}>
-			<Button color='primary'>Show Low Stock</Button>
+			<Button
+				color='primary'
+				variant={showLowStock ? 'outlined' : 'text'}
+				onClick={() => setShowLowStock((prevState) => !prevState)}>
+				Show Low Stock {showLowStock && <Close fontSize='small' />}
+			</Button>
 			<Button variant='outlined' disabled>
 				<Delete />
 				{'  '} Delete Selected

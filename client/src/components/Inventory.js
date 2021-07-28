@@ -16,32 +16,7 @@ import {
 import { Edit, Warning } from '@material-ui/icons';
 import AdjustStock from './AdjustStock';
 
-const rows = [
-	{
-		id: 1,
-		itemName: 'dljf',
-		itemCode: 687,
-		category: 'dfa',
-		stockQuantity: 34,
-		stockOnHold: 0,
-		stockValue: 43,
-		price: 342,
-		lowStockUnits: 1,
-	},
-	{
-		id: 2,
-		itemName: 'asfd',
-		itemCode: 863,
-		category: 'dfa',
-		stockQuantity: 34,
-		stockOnHold: 0,
-		stockValue: 43,
-		price: 342,
-		lowStockUnits: 1,
-	},
-];
-
-export const Inventory = ({ selected, setSelected }) => {
+export const Inventory = ({ selected, setSelected, data }) => {
 	const [adjustStockModalState, setAdjustStockModalState] = useState(false);
 
 	const handleCheckboxClick = (event, id) => {
@@ -67,12 +42,12 @@ export const Inventory = ({ selected, setSelected }) => {
 
 	const handleSelectAllClick = (event) => {
 		if (event.target.checked) {
-			setSelected(rows.map((n) => n.id));
+			setSelected(data.map((n) => n.id));
 			return;
 		}
 		setSelected([]);
 	};
-	console.log(selected);
+
 	const isSelected = (id) => selected.indexOf(id) !== -1;
 
 	return (
@@ -85,10 +60,10 @@ export const Inventory = ({ selected, setSelected }) => {
 								<Checkbox
 									color='primary'
 									indeterminate={
-										selected.length > 0 && selected.length < rows.length
+										selected.length > 0 && selected.length < data.length
 									}
 									onChange={handleSelectAllClick}
-									checked={selected.length === rows.length}
+									checked={selected.length === data.length}
 								/>{' '}
 							</TableCell>
 							<TableCell>Item Name</TableCell>
@@ -104,29 +79,27 @@ export const Inventory = ({ selected, setSelected }) => {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{rows.map((row) => (
-							<TableRow key={row.id}>
+						{data.map((item) => (
+							<TableRow key={item.id}>
 								<TableCell className='selectCheckbox' padding='checkbox'>
 									<Checkbox
 										color='primary'
-										onClick={(event) => handleCheckboxClick(event, row.id)}
-										checked={isSelected(row.id)}
+										onClick={(event) => handleCheckboxClick(event, item.id)}
+										checked={isSelected(item.id)}
 									/>
 								</TableCell>
 								<TableCell component='th' scope='row'>
-									{row.itemName}
+									{item.itemName}
 								</TableCell>
-								<TableCell>{row.itemCode}</TableCell>
-								<TableCell>{row.category}</TableCell>
-								<TableCell>{row.stockQuantity}</TableCell>
-								<TableCell>{row.stockOnHold}</TableCell>
-								<TableCell>&#8377; {row.stockValue}</TableCell>
-								<TableCell>&#8377; {row.price}</TableCell>
+								<TableCell>{item.itemCode}</TableCell>
+								<TableCell>{item.category}</TableCell>
+								<TableCell>{item.stockQuantity}</TableCell>
+								<TableCell>{item.stockOnHold}</TableCell>
+								<TableCell>&#8377; {item.stockValue}</TableCell>
+								<TableCell>&#8377; {item.price}</TableCell>
 								<TableCell>
-									{row.stockQuantity <= row.lowStockUnits && (
-										<IconButton>
-											<Warning color='secondary' />{' '}
-										</IconButton>
+									{item.stockQuantity <= item.lowStockUnits && (
+										<Warning color='secondary' />
 									)}
 								</TableCell>
 								<TableCell>

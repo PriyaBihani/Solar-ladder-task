@@ -89,12 +89,12 @@ exports.updateInventory = async (req) => {
 
 exports.deleteInventory = async (req) => {
 	try {
+		console.log(req.body);
 		const inventory = await Inventory.deleteMany({
-			id: { $in: req.body.id.map(mongoose.Types.ObjectId) },
+			_id: { $in: req.body.id.map(mongoose.Types.ObjectId) },
 		});
-
 		return {
-			message: 'Deleted article successfully',
+			message: 'Deleted Inventory successfully',
 			data: { inventory },
 			error: [],
 			statusCode: 200,

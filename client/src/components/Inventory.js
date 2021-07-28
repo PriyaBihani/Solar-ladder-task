@@ -43,7 +43,7 @@ export const Inventory = ({ selected, setSelected, data }) => {
 
 	const handleSelectAllClick = (event) => {
 		if (event.target.checked) {
-			setSelected(data.map((n) => n.id));
+			setSelected(data.map((n) => n._id));
 			return;
 		}
 		setSelected([]);
@@ -80,50 +80,53 @@ export const Inventory = ({ selected, setSelected, data }) => {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{data.map((item) => (
-							<TableRow key={item.id}>
-								<TableCell className='selectCheckbox' padding='checkbox'>
-									<Checkbox
-										color='primary'
-										onClick={(event) => handleCheckboxClick(event, item.id)}
-										checked={isSelected(item.id)}
-									/>
-								</TableCell>
-								<TableCell component='th' scope='row' align='center'>
-									{item.itemName}
-								</TableCell>
-								<TableCell align='center'>{item.itemCode}</TableCell>
-								<TableCell align='center'>{item.category}</TableCell>
-								<TableCell align='center'>{item.stockQuantity}</TableCell>
-								<TableCell align='center'>{item.stockOnHold}</TableCell>
-								<TableCell align='center'>
-									&#8377; {item.stockQuantity * item.price}
-								</TableCell>
-								<TableCell align='center'>&#8377; {item.price}</TableCell>
-								<TableCell align='center'>
-									{item.stockQuantity <= item.lowStockUnits && (
-										<Warning color='secondary' />
-									)}
-								</TableCell>
-								<TableCell align='center'>
-									{' '}
-									<IconButton>
-										<Edit color='disabled' />{' '}
-									</IconButton>
-								</TableCell>
-								<TableCell align='center'>
-									<Button
-										variant='outlined'
-										color='primary'
-										onClick={() => {
-											setAdjustStockModalState((prevState) => !prevState);
-											setAdjustStockModalData(item);
-										}}>
-										Adjust Stock
-									</Button>
-								</TableCell>
-							</TableRow>
-						))}
+						{data.length > 0 &&
+							data.map((item) => (
+								<TableRow key={item._id}>
+									<TableCell className='selectCheckbox' padding='checkbox'>
+										<Checkbox
+											color='primary'
+											onClick={(event) => handleCheckboxClick(event, item._id)}
+											checked={isSelected(item._id)}
+										/>
+									</TableCell>
+									<TableCell component='th' scope='row' align='center'>
+										{item.itemName}
+									</TableCell>
+									<TableCell align='center'>{item.itemCode}</TableCell>
+									<TableCell align='center'>{item.category}</TableCell>
+									<TableCell align='center'>{item.stockQuantity}</TableCell>
+									<TableCell align='center'>{item.stockOnHold}</TableCell>
+									<TableCell align='center'>
+										&#8377; {item.stockQuantity * item.purchasePrice}
+									</TableCell>
+									<TableCell align='center'>
+										&#8377; {item.purchasePrice}
+									</TableCell>
+									<TableCell align='center'>
+										{item.stockQuantity <= item.lowStockUnits && (
+											<Warning color='secondary' />
+										)}
+									</TableCell>
+									<TableCell align='center'>
+										{' '}
+										<IconButton>
+											<Edit color='disabled' />{' '}
+										</IconButton>
+									</TableCell>
+									<TableCell align='center'>
+										<Button
+											variant='outlined'
+											color='primary'
+											onClick={() => {
+												setAdjustStockModalState((prevState) => !prevState);
+												setAdjustStockModalData(item);
+											}}>
+											Adjust Stock
+										</Button>
+									</TableCell>
+								</TableRow>
+							))}
 					</TableBody>
 				</Table>
 			</TableContainer>

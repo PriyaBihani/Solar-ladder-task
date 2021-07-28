@@ -63,7 +63,9 @@ router.post('/inventory/update/:id', async (req, res) => {
 
 router.post('/inventory/delete', async (req, res) => {
 	try {
+		console.log('working');
 		let inventory = await inventoryController.deleteInventory(req);
+
 		let code = inventory.statusCode;
 		delete inventory.statusCode;
 		res.status(code).send(inventory);

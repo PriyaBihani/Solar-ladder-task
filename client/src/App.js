@@ -45,8 +45,7 @@ const App = () => {
 
 	const getAllInventories = async () => {
 		const response = await axios.get('/api/inventory/all');
-		console.log(response);
-		setInventories(response.data);
+		setInventories(response.data.data.inventories);
 	};
 
 	useEffect(() => {

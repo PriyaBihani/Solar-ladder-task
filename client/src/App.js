@@ -42,7 +42,11 @@ const App = () => {
 	const [showLowStock, setShowLowStock] = useState(false);
 	return (
 		<div className='App'>
-			<Actions setShowLowStock={setShowLowStock} showLowStock={showLowStock} />
+			<Actions
+				setShowLowStock={setShowLowStock}
+				showLowStock={showLowStock}
+				selected={selected}
+			/>
 			<Inventory
 				selected={selected}
 				setSelected={setSelected}

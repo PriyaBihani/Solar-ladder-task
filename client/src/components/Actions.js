@@ -3,7 +3,7 @@ import { Box, Button } from '@material-ui/core';
 import { Delete, Add, Close } from '@material-ui/icons';
 import Lodal from './Upsert/Lodal';
 
-export const Actions = ({ showLowStock, setShowLowStock }) => {
+export const Actions = ({ showLowStock, setShowLowStock, selected }) => {
 	const [addModalState, setaddModalState] = useState(false);
 
 	return (
@@ -21,7 +21,10 @@ export const Actions = ({ showLowStock, setShowLowStock }) => {
 				onClick={() => setShowLowStock((prevState) => !prevState)}>
 				Show Low Stock {showLowStock && <Close fontSize='small' />}
 			</Button>
-			<Button variant='outlined' disabled>
+			<Button
+				variant='outlined'
+				disabled={selected.length > 0 ? false : true}
+				color={selected.length > 0 ? 'secondary' : 'primary'}>
 				<Delete />
 				{'  '} Delete Selected
 			</Button>

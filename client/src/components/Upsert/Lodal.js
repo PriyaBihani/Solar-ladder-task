@@ -4,6 +4,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import ImageUploader from './ImageUploader'
+import AddForm from './AddForm';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -13,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     },
     paper: {
         backgroundColor: theme.palette.background.paper,
-        width: "80%",
+        width: "70%",
         height: "80%",
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
@@ -43,13 +44,9 @@ const Lodal = ({ addModalState, setaddModalState }) => {
             >
                 <Fade in={addModalState}>
                     <div className={classes.paper}>
-                        <h2 id="transition-modal-title">Transition modal</h2>
-                        <p id="transition-modal-description">react-transition-group animates me.</p>
-                        <ImageUploader
-                            onFileUpload={files => {
-                                console.log(files);
-                            }}
-                        />
+                        <h2 id="transition-modal-title">Create Modal</h2>
+                        <AddForm />
+
                     </div>
 
 

@@ -38,3 +38,34 @@ code {
     width: 20%;
     margin: 5px;
 }
+
+.upload-preview {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+form.add-form {
+    border-top: 1px solid #cbcbcb;
+    border-bottom: 1px solid #cbcbcb;
+    padding: 10px;
+    min-height: 85%;
+}
+
+form.add-form header {
+    border-top: 1px solid #cbcbcb;
+    border-bottom: 1px solid #cbcbcb;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+
+form.add-form>div:nth-child(1) {
+    border-right: 1px solid #cbcbcb;
+    margin: 5px;
+    padding: 5px;
+}
+
+form.add-form>div:nth-child(2) {
+    border-left: 1px solid #cbcbcb;
+    margin: 5px;
+    padding: 5px;
+}

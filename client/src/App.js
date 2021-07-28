@@ -41,10 +41,11 @@ import { Inventory, Actions } from './components';
 const App = () => {
 	const [selected, setSelected] = useState([]);
 	const [showLowStock, setShowLowStock] = useState(false);
-	const [inventories, setInventories] = useState();
+	const [inventories, setInventories] = useState([]);
 
 	const getAllInventories = async () => {
 		const response = await axios.get('/api/inventory/all');
+		console.log(response);
 		setInventories(response.data);
 	};
 

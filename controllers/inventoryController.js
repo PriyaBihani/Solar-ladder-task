@@ -25,6 +25,7 @@ exports.getInventories = async (req) => {
 };
 
 exports.addInventory = async (req) => {
+	console.log('In controller');
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
 		return {
@@ -38,7 +39,7 @@ exports.addInventory = async (req) => {
 
 	try {
 		const inventory = new Inventory(req.body);
-		const inventorySaved = await inventory.save();
+		await inventory.save();
 
 		return {
 			message: 'Inventory added successfully',

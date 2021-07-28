@@ -23,6 +23,11 @@ router.get('/inventory/all', async (req, res) => {
 router.post(
 	'/inventory/add',
 	[check('itemName', 'itemName field is required').notEmpty()],
+	[check('itemCode', 'itemCode field is required').notEmpty()],
+	[check('gst', 'gst field is required').notEmpty()],
+	[check('purchasePrice', 'purchasePrice field is required').notEmpty()],
+	[check('stockQuantity', 'stockQuantity field is required').notEmpty()],
+	[check('lowQuantity', 'lowQuantity field is required').notEmpty()],
 	async (req, res) => {
 		try {
 			let inventory = await inventoryController.addInventory(req);

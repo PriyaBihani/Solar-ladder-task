@@ -11,7 +11,6 @@ app.use(express.json({ extended: false })); //body parsing middleware
 app.use(cors()); // CORS middle to avoid any cross origin errors
 
 // Routes
-app.use('/api', require('./routes/auth'));
 app.use('/api', require('./routes/inventory'));
 
 // Serve static assets in production

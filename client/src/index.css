@@ -49,11 +49,11 @@ form h4 {
     font-weight: 600;
     padding: 0px;
     margin: 0px;
+    color: rgba(99, 96, 96, 0.938);
 }
 
 form hr {
-    color: grey;
-    background-color: grey;
+    border-top: 1px solid #f1f1f1;
 }
 
 

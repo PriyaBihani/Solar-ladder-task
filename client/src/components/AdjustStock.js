@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Modal from '@material-ui/core/Modal';
@@ -48,6 +49,24 @@ const AdjustStock = ({
 	const handleClose = () => {
 		setAdjustStockModalState(!adjustStockModalState);
 		setAdjustStockModalData(null);
+	};
+
+	const handleSave = async () => {
+		const response = await axios.post(
+			`api/inventory/update/${data._id}`,
+			{
+				stockQuantity:
+					value === 'add'
+						? Number(data.stockQuantity) + Number(adjustQuantity)
+						: Number(data.stockQuantity) - Number(adjustQuantity),
+			},
+			{
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		);
+		console.log(response);
 	};
 
 	return (
@@ -120,8 +139,13 @@ const AdjustStock = ({
 								marginTop='25px'
 								display='flex'
 								justifyContent='space-evenly'>
-								<Button variant='outlined'>Cancel</Button>
-								<Button variant='contained' color='primary'>
+								<Button variant='outlined' onClick={handleClose}>
+									Cancel
+								</Button>
+								<Button
+									variant='contained'
+									color='primary'
+									onClick={handleSave}>
 									Save
 								</Button>
 							</Box>

@@ -15,7 +15,8 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         backgroundColor: theme.palette.background.paper,
         width: "70%",
-        height: "80%",
+        height: "85%",
+        overflow: "scroll",
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
     },

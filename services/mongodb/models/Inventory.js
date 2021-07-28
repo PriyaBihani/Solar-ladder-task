@@ -9,6 +9,7 @@ const InventorySchema = mongoose.Schema(
 		},
 		itemCode: {
 			type: Number,
+			required: true,
 		},
 		category: {
 			type: String,
@@ -16,6 +17,7 @@ const InventorySchema = mongoose.Schema(
 		stockQuantity: {
 			type: Number,
 			default: 0,
+			required: true,
 		},
 		stockOnHold: {
 			type: Number,
@@ -29,6 +31,15 @@ const InventorySchema = mongoose.Schema(
 		purchasePrice: {
 			type: Number,
 			default: 0,
+			required: true,
+		},
+		lowQuantity: {
+			type: Number,
+			required: true,
+		},
+		gst: {
+			type: Number,
+			required: true,
 		},
 	},
 	{ timestamps: true }

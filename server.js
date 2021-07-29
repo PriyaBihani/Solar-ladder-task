@@ -1,5 +1,5 @@
 const express = require('express');
-const connectDb = require('./services/mongodb/connectDB');
+const connectDb = require('./services/mongodb/connectDb');
 const app = express();
 var bodyParser = require('body-parser')
 

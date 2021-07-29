@@ -124,7 +124,7 @@ const EditForm = ({ data, setData }) => {
 						},
 					}
 				);
-				console.log(res);
+
 				setData(res);
 				if (res.status == 200) {
 					toast.success(res.data.message);

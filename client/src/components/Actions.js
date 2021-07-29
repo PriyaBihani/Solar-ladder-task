@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Box, Button } from '@material-ui/core';
 import { Delete, Add, Close } from '@material-ui/icons';
 import axios from 'axios';
-import Lodal from './Upsert/UpsertModal';
+import UpsertModal from './Upsert/UpsertModal';
 
 export const Actions = ({
 	showLowStock,
@@ -24,6 +24,12 @@ export const Actions = ({
 			}
 		);
 		console.log(removed);
+		setData(removed);
+		if (removed.status == 200) {
+			toast.success(removed.data.message);
+		} else {
+			toast.error(removed.data.message);
+		}
 	};
 	return (
 		<Box
@@ -58,7 +64,7 @@ export const Actions = ({
 				<Add />
 				{'   '} Add To Inventory
 			</Button>
-			<Lodal
+			<UpsertModal
 				modalState={addModalState}
 				setModalState={setaddModalState}
 				setData={setData}

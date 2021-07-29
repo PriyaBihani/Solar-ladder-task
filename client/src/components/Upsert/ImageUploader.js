@@ -33,7 +33,6 @@ const ImageUploader = ({ setImages, currentImages }) => {
         handleAcceptedFiles(files);
     }, [files]);
 
-    console.log(currentImages)
     return (
         <div class='upload-container'>
             <Dropzone
@@ -56,7 +55,7 @@ const ImageUploader = ({ setImages, currentImages }) => {
                             uploads.length > 0 ? uploads.length > 0 &&
                                 uploads.map((upload) => {
                                     return <img src={upload.preview} alt='' />;
-                                }) : currentImages.length > 0 &&
+                                }) : currentImages && currentImages.length > 0 &&
                             currentImages.map((img) => {
                                 return <img src={img} alt='' />;
                             })

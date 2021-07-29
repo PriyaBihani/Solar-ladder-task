@@ -3,6 +3,8 @@ import { Box, Button } from '@material-ui/core';
 import { Delete, Add, Close } from '@material-ui/icons';
 import axios from 'axios';
 import Lodal from './Upsert/Lodal';
+import { toast } from 'react-toastify';
+
 
 export const Actions = ({ showLowStock, setShowLowStock, selected, setData }) => {
 	const [addModalState, setaddModalState] = useState(false);
@@ -19,6 +21,12 @@ export const Actions = ({ showLowStock, setShowLowStock, selected, setData }) =>
 			}
 		);
 		console.log(removed);
+		setData(removed)
+		if (removed.status == 200) {
+			toast.success(removed.data.message)
+		} else {
+			toast.error(removed.data.message)
+		}
 	};
 	return (
 		<Box

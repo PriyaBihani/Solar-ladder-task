@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import Dropzone from 'react-dropzone';
 
-const ImageUploader = ({ setImages }) => {
+const ImageUploader = ({ setImages, currentImages }) => {
     const [files, setFiles] = useState([]);
     const [uploads, setUploads] = useState([]);
+    const [img, setImg] = useState([])
 
     const handleAcceptedFiles = (files) => {
-        files.map((file) =>
+        setImg([])
+        files.map((file) => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImg(prev => [...prev, reader.result])
+            };
+            reader.readAsDataURL(file);
             Object.assign(file, {
                 preview:
                     file['type'].split('/')[0] === 'image'
@@ -14,14 +21,19 @@ const ImageUploader = ({ setImages }) => {
                         : null,
                 formattedSize: file.size,
             })
-        );
-        setImages(files)
+        });
         setUploads(files);
     };
 
     useEffect(() => {
+        setImages(img)
+    }, [img]);
+
+    useEffect(() => {
         handleAcceptedFiles(files);
     }, [files]);
+
+    console.log(currentImages)
     return (
         <div class='upload-container'>
             <Dropzone
@@ -40,12 +52,16 @@ const ImageUploader = ({ setImages }) => {
                                 <i class='far fa-cloud-upload-alt'></i>
                             </div>
                         </div>
-                        <div className='upload-preview'>
-                            {uploads.length > 0 &&
+                        {
+                            uploads.length > 0 ? uploads.length > 0 &&
                                 uploads.map((upload) => {
                                     return <img src={upload.preview} alt='' />;
-                                })}
-                        </div>
+                                }) : currentImages.length > 0 &&
+                            currentImages.map((img) => {
+                                return <img src={img} alt='' />;
+                            })
+                        }
+
                     </div>
                 )}
             </Dropzone>

@@ -2,18 +2,19 @@ const mongoose = require('mongoose');
 
 const InventorySchema = mongoose.Schema(
 	{
+		images: [{ type: String, }],
 		itemName: {
 			type: String,
 			unique: true,
 			required: true,
 		},
+		category: {
+			type: String,
+		},
 		itemCode: {
 			type: Number,
 			required: true,
 			unique: true,
-		},
-		category: {
-			type: String,
 		},
 		stockQuantity: {
 			type: Number,
@@ -44,6 +45,14 @@ const InventorySchema = mongoose.Schema(
 		gst: {
 			type: Number,
 			required: true,
+		},
+		inclusive: {
+			type: Boolean,
+			required: true,
+		},
+		asOfDate: {
+			type: String,
+			required: false,
 		},
 	},
 	{ timestamps: true }

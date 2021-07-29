@@ -15,10 +15,13 @@ import {
 
 import { Edit, Warning } from '@material-ui/icons';
 import AdjustStock from './AdjustStock';
+import Lodal from './Upsert/Lodal';
 
-export const Inventory = ({ selected, setSelected, data }) => {
+export const Inventory = ({ selected, setSelected, data, setData }) => {
 	const [adjustStockModalState, setAdjustStockModalState] = useState(false);
 	const [adjustStockModalData, setAdjustStockModalData] = useState(null);
+	const [editModalState, seteditStockModalState] = useState(false);
+	const [editModalData, seteditModalData] = useState(null);
 
 	const handleCheckboxClick = (event, id) => {
 		event.stopPropagation();
@@ -111,7 +114,10 @@ export const Inventory = ({ selected, setSelected, data }) => {
 									<TableCell align='center'>
 										{' '}
 										<IconButton>
-											<Edit color='disabled' />{' '}
+											<Edit onClick={() => {
+												seteditModalData(item)
+												seteditStockModalState(!editModalState)
+											}} color='disabled' />{' '}
 										</IconButton>
 									</TableCell>
 									<TableCell align='center'>
@@ -130,7 +136,16 @@ export const Inventory = ({ selected, setSelected, data }) => {
 					</TableBody>
 				</Table>
 			</TableContainer>
+			<Lodal
+				setData={setData}
+				modalState={editModalState}
+				setModalState={seteditStockModalState}
+				type="edit"
+				data={editModalData}
+			/>
+
 			<AdjustStock
+				setData={setData}
 				adjustStockModalState={adjustStockModalState}
 				setAdjustStockModalState={setAdjustStockModalState}
 				data={adjustStockModalData}

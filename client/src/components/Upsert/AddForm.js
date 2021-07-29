@@ -15,6 +15,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormGroup from '@material-ui/core/FormGroup';
 import { Add } from '@material-ui/icons';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -31,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FullWidthGrid() {
+const AddForm = ({ setData }) => {
   const classes = useStyles();
 
   const [images, setImages] = useState([])
@@ -39,7 +42,7 @@ export default function FullWidthGrid() {
   const [category, setCategory] = useState()
   const [itemCode, setitemCode] = useState()
   const [description, setDescription] = useState()
-  const [stockValue, setstockValue] = useState()
+  const [stockQuantity, setstockQuantity] = useState()
   const [unit, setUnit] = useState('')
   const [date, setDate] = useState()
   const [stockWarning, setStockWarning] = useState(false)
@@ -50,6 +53,7 @@ export default function FullWidthGrid() {
 
   const [errors, setErrors] = useState([])
 
+  console.log(images)
   const validateFields = () => {
     let errorArray = []
     if (!itemName || itemName == "" || itemName && itemName.length === 0) {
@@ -58,17 +62,18 @@ export default function FullWidthGrid() {
       errorArray.push('category')
     } if (!itemCode || itemCode && itemCode.length === 0) {
       errorArray.push('itemCode')
+    } if (!stockQuantity || stockQuantity === 0) {
+      errorArray.push('stockQuantity')
     } if (!description || description && description.length === 0) {
       errorArray.push('description')
-    } if (!stockValue || stockValue === 0) {
-      errorArray.push('stockValue')
     } if (!unit || unit && unit.length === 0) {
       errorArray.push('unit')
-    } if (!date || date && date.length === 0) {
-      errorArray.push('date')
+    } if (!purchasePrice || purchasePrice && purchasePrice === 0) {
+      errorArray.push('purchasePrice')
     }
-
     setErrors(errorArray)
+
+    return errorArray.length === 0
   }
 
 
@@ -79,12 +84,38 @@ export default function FullWidthGrid() {
     }
   }, [])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log({ images, itemName, category, itemCode, description, stockValue, unit, date, stockWarning, lowQuantity, purchasePrice, gst, inclusive })
+    console.log({ images, itemName, category, itemCode, description, stockQuantity, unit, asOfDate: date, stockWarning, lowQuantity, purchasePrice, gst, inclusive })
     // if (!name)
-    validateFields()
+    const isValidaed = validateFields()
     console.log(itemName)
+
+    if (isValidaed) {
+      try {
+        const res = await axios.post(
+          'api/inventory/add',
+          { images, itemName, category, itemCode, description, stockQuantity, unit, date, stockWarning, lowQuantity, purchasePrice, gst, inclusive },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+
+        console.log(res)
+        if (res.status == 200) {
+          toast.success(res.data.message)
+        } else {
+          toast.error(res.data.message)
+        }
+        setData(res)
+      } catch (error) {
+        toast.error(error.message)
+        console.log(error)
+      }
+
+    } else { toast.error("Please fill in requried fields") }
 
   }
 
@@ -118,15 +149,16 @@ export default function FullWidthGrid() {
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                <MenuItem value={"Panel"}>Panel</MenuItem>
-                <MenuItem value={"Inverter"}>Inverter</MenuItem>
+                <MenuItem value={"Fiction"}>Fiction</MenuItem>
+                <MenuItem value={"YoungAdult"}>YoungAdult</MenuItem>
                 <MenuItem value={"Wire"}>Wire</MenuItem>
+                <MenuItem value={"Book"}>Book</MenuItem>
               </Select>
             </FormControl>
 
             <FormControl margin="normal" fullWidth="true">
               <Grid container>
-                <TextField error={errors.includes("itemCode")} onChange={(e) => { setitemCode(e.target.value) }} size="small" id="item-code" label="ItemCode" variant="outlined" />
+                <TextField type="number" error={errors.includes("itemCode")} onChange={(e) => { setitemCode(e.target.value) }} size="small" id="item-code" label="ItemCode" variant="outlined" />
               </Grid>
             </FormControl>
             <FormControl margin="normal" fullWidth="true">
@@ -146,6 +178,7 @@ export default function FullWidthGrid() {
                 <Select
                   labelId="unit-label"
                   id="unit"
+                  error={errors.includes("unit")}
                   label="Select Unit"
                   style={{ width: "80%" }}
                   onChange={(e) => { setUnit(e.target.value) }}
@@ -162,7 +195,7 @@ export default function FullWidthGrid() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl margin="normal" size="small" variant="outlined" className={classes.formControl}>
-                <TextField onChange={(e) => { setstockValue(e.target.value) }} type="number" size="small" id="item-name" label="Opening Stock" variant="outlined" InputProps={{
+                <TextField error={errors.includes("stockQuantity")} onChange={(e) => { setstockQuantity(e.target.value) }} type="number" size="small" id="item-name" label="Opening Stock" variant="outlined" InputProps={{
                   endAdornment: (
                     <InputAdornment position='end'>
                       {unit}
@@ -195,7 +228,7 @@ export default function FullWidthGrid() {
             {stockWarning ? (<FormControl margin="normal">
               <TextField InputProps={{
                 inputProps: { min: 0 }
-              }} onChange={e => { setLowQuantity(e.target.value) }} onChange={e => { setLowQuantity(e.target.value) }} label="Stock Warning at" type="number" size="small" id="purchase-price" variant="outlined" />
+              }} onChange={e => { setLowQuantity(e.target.value) }} label="Stock Warning at" type="number" size="small" id="purchasePrice" variant="outlined" />
             </FormControl>) : null}
           </FormGroup>
 
@@ -208,7 +241,7 @@ export default function FullWidthGrid() {
             <FormControl margin="normal">
               <TextField InputProps={{
                 inputProps: { min: 0 }
-              }} onChange={e => { setPurchasePrice(e.target.value) }} label="Purchase Price" type="number" size="small" id="purchase-price" variant="outlined" />
+              }} error={errors.includes("purchasePrice")} onChange={e => { setPurchasePrice(e.target.value) }} label="Purchase Price" type="number" size="small" id="purchase-price" variant="outlined" />
             </FormControl>
             <FormControlLabel
               style={{ marginLeft: "20px" }}
@@ -216,6 +249,7 @@ export default function FullWidthGrid() {
                 <Switch
                   name="Inclusive of tax"
                   color="primary"
+                  onChange={() => { setInclusive(!inclusive) }}
                 />
               }
               label="Inclusive of tax"
@@ -232,13 +266,12 @@ export default function FullWidthGrid() {
               style={{ width: "50%" }}
             >
               <MenuItem value="none">
-                <em>nonne</em>
+                <em>none</em>
               </MenuItem>
-              <MenuItem value={"Exempted"}>Exempted</MenuItem>
-              <MenuItem value={"5%"}>5%</MenuItem>
-              <MenuItem value={"10%"}>10%</MenuItem>
-              <MenuItem value={"18%"}>18%</MenuItem>
-              <MenuItem value={"28%"}>28%</MenuItem>
+              <MenuItem value={"5"}>5%</MenuItem>
+              <MenuItem value={"10"}>10%</MenuItem>
+              <MenuItem value={"18"}>18%</MenuItem>
+              <MenuItem value={"28"}>28%</MenuItem>
             </Select>
           </FormControl>
         </Grid>
@@ -257,3 +290,5 @@ export default function FullWidthGrid() {
 
   );
 }
+
+export default AddForm

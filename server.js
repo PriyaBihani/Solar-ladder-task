@@ -1,6 +1,7 @@
 const express = require('express');
 const connectDb = require('./services/mongodb/connectDB');
 const app = express();
+var bodyParser = require('body-parser')
 
 var cors = require('cors');
 // Connect to DB
@@ -9,6 +10,7 @@ connectDb();
 // Middlewares
 app.use(express.json({ extended: false })); //body parsing middleware
 app.use(cors()); // CORS middle to avoid any cross origin errors
+app.use(bodyParser({ limit: '50mb' }))
 
 // Routes
 app.use('/api', require('./routes/inventory'));

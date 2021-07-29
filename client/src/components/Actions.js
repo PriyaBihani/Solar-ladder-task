@@ -4,7 +4,7 @@ import { Delete, Add, Close } from '@material-ui/icons';
 import axios from 'axios';
 import Lodal from './Upsert/Lodal';
 
-export const Actions = ({ showLowStock, setShowLowStock, selected }) => {
+export const Actions = ({ showLowStock, setShowLowStock, selected, setData }) => {
 	const [addModalState, setaddModalState] = useState(false);
 	const handledelete = async () => {
 		const removed = await axios.post(
@@ -54,8 +54,11 @@ export const Actions = ({ showLowStock, setShowLowStock, selected }) => {
 				{'   '} Add To Inventory
 			</Button>
 			<Lodal
-				addModalState={addModalState}
-				setaddModalState={setaddModalState}
+				modalState={addModalState}
+				setModalState={setaddModalState}
+				setData={setData}
+				type="add"
+				data={{}}
 			/>
 		</Box>
 	);

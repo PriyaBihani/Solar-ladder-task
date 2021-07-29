@@ -14,6 +14,8 @@ import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import TextField from '@material-ui/core/TextField';
 import FormGroup from '@material-ui/core/FormGroup';
+import { toast } from 'react-toastify';
+
 
 const useStyles = makeStyles((theme) => {
 	console.log(theme);
@@ -41,6 +43,7 @@ const AdjustStock = ({
 	setAdjustStockModalState,
 	data,
 	setAdjustStockModalData,
+	setData
 }) => {
 	const classes = useStyles();
 	const [value, setValue] = useState('add');
@@ -66,6 +69,13 @@ const AdjustStock = ({
 				},
 			}
 		);
+
+		if (response.status == 200) {
+			toast.success(response.data.message)
+		} else {
+			toast.error(response.data.message)
+		}
+		setData(response)
 		console.log(response);
 	};
 

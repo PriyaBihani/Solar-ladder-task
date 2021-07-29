@@ -5,6 +5,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import ImageUploader from './ImageUploader'
 import AddForm from './AddForm';
+import EditForm from './EditForm';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -22,11 +23,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Lodal = ({ addModalState, setaddModalState }) => {
+const Lodal = ({ modalState, setModalState, type, data, setData }) => {
     const classes = useStyles();
 
     const handleClose = () => {
-        setaddModalState(!addModalState);
+        setModalState(!modalState);
     };
 
     return (
@@ -35,7 +36,7 @@ const Lodal = ({ addModalState, setaddModalState }) => {
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
                 className={classes.modal}
-                open={addModalState}
+                open={modalState}
                 onClose={handleClose}
                 closeAfterTransition
                 BackdropComponent={Backdrop}
@@ -43,10 +44,13 @@ const Lodal = ({ addModalState, setaddModalState }) => {
                     timeout: 500,
                 }}
             >
-                <Fade in={addModalState}>
+                <Fade in={modalState}>
                     <div className={classes.paper}>
-                        <h3 id="transition-modal-title">Create Item</h3>
-                        <AddForm />
+                        {
+                            type === "add" ? <> <h3 id="transition-modal-title">Create Item</h3>
+                                <AddForm setData={setData} /></> : <> <h3 id="transition-modal-title">Edit Item</h3>
+                                <EditForm setData={setData} data={data} />  </>
+                        }
                     </div>
                 </Fade>
             </Modal>

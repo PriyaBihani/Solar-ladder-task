@@ -2,6 +2,7 @@ const express = require('express');
 const connectDb = require('./services/mongodb/connectDb');
 const app = express();
 var bodyParser = require('body-parser')
+var path = require("path")
 
 var cors = require('cors');
 // Connect to DB

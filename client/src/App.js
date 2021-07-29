@@ -2,15 +2,14 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Inventory, Actions } from './components';
 
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 
 const App = () => {
 	const [selected, setSelected] = useState([]);
 	const [showLowStock, setShowLowStock] = useState(false);
 	const [inventories, setInventories] = useState([]);
-	const [data, setData] = useState()
+	const [data, setData] = useState();
 
 	const getAllInventories = async () => {
 		const response = await axios.get('/api/inventory/all');
@@ -37,8 +36,8 @@ const App = () => {
 				data={
 					showLowStock
 						? inventories.filter(
-							(item) => item.stockQuantity <= item.lowStockUnits
-						)
+								(item) => item.stockQuantity <= item.lowQuantity
+						  )
 						: inventories
 				}
 			/>

@@ -15,7 +15,7 @@ import {
 
 import { Edit, Warning } from '@material-ui/icons';
 import AdjustStock from './AdjustStock';
-import Lodal from './Upsert/Lodal';
+import UpsertModal from './Upsert/UpsertModal';
 
 export const Inventory = ({ selected, setSelected, data, setData }) => {
 	const [adjustStockModalState, setAdjustStockModalState] = useState(false);
@@ -107,17 +107,21 @@ export const Inventory = ({ selected, setSelected, data, setData }) => {
 										&#8377; {item.purchasePrice}
 									</TableCell>
 									<TableCell align='center'>
-										{item.stockQuantity <= item.lowStockUnits && (
+										{console.log(item)}
+										{item.stockQuantity <= item.lowQuantity && (
 											<Warning color='secondary' />
 										)}
 									</TableCell>
 									<TableCell align='center'>
 										{' '}
 										<IconButton>
-											<Edit onClick={() => {
-												seteditModalData(item)
-												seteditStockModalState(!editModalState)
-											}} color='disabled' />{' '}
+											<Edit
+												onClick={() => {
+													seteditModalData(item);
+													seteditStockModalState(!editModalState);
+												}}
+												color='disabled'
+											/>{' '}
 										</IconButton>
 									</TableCell>
 									<TableCell align='center'>
@@ -136,11 +140,11 @@ export const Inventory = ({ selected, setSelected, data, setData }) => {
 					</TableBody>
 				</Table>
 			</TableContainer>
-			<Lodal
+			<UpsertModal
 				setData={setData}
 				modalState={editModalState}
 				setModalState={seteditStockModalState}
-				type="edit"
+				type='edit'
 				data={editModalData}
 			/>
 

@@ -2,9 +2,14 @@ import { useState } from 'react';
 import { Box, Button } from '@material-ui/core';
 import { Delete, Add, Close } from '@material-ui/icons';
 import axios from 'axios';
-import Lodal from './Upsert/Lodal';
+import Lodal from './Upsert/UpsertModal';
 
-export const Actions = ({ showLowStock, setShowLowStock, selected, setData }) => {
+export const Actions = ({
+	showLowStock,
+	setShowLowStock,
+	selected,
+	setData,
+}) => {
 	const [addModalState, setaddModalState] = useState(false);
 	const handledelete = async () => {
 		const removed = await axios.post(
@@ -57,7 +62,7 @@ export const Actions = ({ showLowStock, setShowLowStock, selected, setData }) =>
 				modalState={addModalState}
 				setModalState={setaddModalState}
 				setData={setData}
-				type="add"
+				type='add'
 				data={{}}
 			/>
 		</Box>

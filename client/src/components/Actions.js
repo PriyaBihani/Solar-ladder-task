@@ -3,6 +3,7 @@ import { Box, Button } from '@material-ui/core';
 import { Delete, Add, Close } from '@material-ui/icons';
 import axios from 'axios';
 import UpsertModal from './Upsert/UpsertModal';
+import { toast } from 'react-toastify';
 
 export const Actions = ({
 	showLowStock,
